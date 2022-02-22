@@ -32,12 +32,12 @@ function getAmount () {
 
 function getAnualPercentRate () {
   prompt('Please enter the Annual Percentage Rate as a percent value (eg. 7.5 for 7.5%):');
-  let rate = (readline.question()) / 100;
-  while (isInvalidRate(String(rate))) {
+  let rate = readline.question();
+  while (isInvalidRate(rate)) {
     prompt('Please enter a number greater than or equal to zero');
-    rate = readline.question() / 100;
+    rate = readline.question();
   }
-  return rate;
+  return rate / 100;
 }
 
 function getLoanDuration () {
