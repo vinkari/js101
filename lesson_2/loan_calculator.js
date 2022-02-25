@@ -66,7 +66,7 @@ function displayMonthlyPayment (monthlyPayment) {
 }
 
 function repeatCalculationCheck () {
-  prompt('Would you like to do another calucation? (enter "y" or "n")');
+  prompt('Would you like to do another calculation? (enter "y" or "n")');
   let answer = readline.question().toLowerCase();
   while (!['y', 'yes', 'n', 'no'].includes(answer)) {
     prompt('Please enter "y" for yes or "n" for no');
