@@ -33,20 +33,6 @@ function welcomeMessage () {
   prompt('The first player to win three rounds wins the match. Good luck!\n');
 }
 
-function findValidInputs () {
-  let validInputsArray = [];
-  for (let property in CHOICES) {
-    for (let value of CHOICES[property].validInput) {
-      validInputsArray.push(value);
-    }
-  }
-  return validInputsArray;
-}
-
-function isValidInput (userInput) {
-  return findValidInputs().includes(userInput);
-}
-
 function getUserChoice () {
   prompt('Enter "r" for rock, "p" for paper, "sc" for scissors, "l" for lizard or "sp" for spock.');
   let userInput = readline.question().toLowerCase();
@@ -56,6 +42,20 @@ function getUserChoice () {
     userInput = readline.question().toLowerCase();
   }
   return findFullChoice(userInput);
+}
+
+function isValidInput (userInput) {
+  return findValidInputs().includes(userInput);
+}
+
+function findValidInputs () {
+  let validInputsArray = [];
+  for (let property in CHOICES) {
+    for (let value of CHOICES[property].validInput) {
+      validInputsArray.push(value);
+    }
+  }
+  return validInputsArray;
 }
 
 function findFullChoice (userInput) {
@@ -101,16 +101,31 @@ function displayRoundWinner (roundWinner) {
   }
 }
 
-function displayWinCount (userWinCount, computerWinCount) {
-  prompt(`Your win count is ${userWinCount}. The computer's win count is ${computerWinCount}.\n`);
+function incrementScore (score, roundWinner) {
+  switch (roundWinner) {
+    case 'user':
+      score.userWinCount += 1;
+      break;
+    case 'computer':
+      score.computerWinCount += 1;
+  }
 }
 
-function displayMatchWinner (userWinCount) {
-  if (userWinCount === MAX_WINS) {
+function displayWinCount (score) {
+  prompt(`Your win count is ${score.userWinCount}. The computer's win count is ${score.computerWinCount}.\n`);
+}
+
+function displayMatchWinner (score) {
+  if (score.userWinCount === MAX_WINS) {
     prompt('Congratulations, you won the match!!\n');
   } else {
     prompt('Sorry, the computer won the match.\n');
   }
+}
+
+function resetScore (score) {
+  score.userWinCount = 0;
+  score.computerWinCount = 0;
 }
 
 function getPlayAgain () {
@@ -133,31 +148,25 @@ function goodbyeMessage () {
   prompt('Thanks for playing!');
 }
 
+let score = {
+  userWinCount: 0,
+  computerWinCount: 0,
+};
+
 welcomeMessage();
 
 while (true) {
-  let userWinCount = 0;
-  let computerWinCount = 0;
-
-  while (userWinCount < MAX_WINS && computerWinCount < MAX_WINS) {
+  while (score.userWinCount < MAX_WINS && score.computerWinCount < MAX_WINS) {
     let userChoice = getUserChoice();
     let computerChoice = determineComputerChoice();
     let roundWinner = determineRoundWinner(userChoice, computerChoice);
-
     displayChoices(userChoice, computerChoice);
     displayRoundWinner(roundWinner);
-
-    switch (roundWinner) {
-      case 'user':
-        userWinCount += 1;
-        break;
-      case 'computer':
-        computerWinCount += 1;
-    }
-
-    displayWinCount(userWinCount, computerWinCount);
+    incrementScore(score, roundWinner);
+    displayWinCount(score);
   }
-  displayMatchWinner(userWinCount);
+  displayMatchWinner(score);
+  resetScore(score);
 
   let playAgain = getPlayAgain();
   if (playAgain[0] === 'y') {
