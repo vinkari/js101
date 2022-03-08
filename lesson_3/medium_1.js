@@ -9,7 +9,6 @@ The Flintstones Rock!
   The Flintstones Rock!
    ...
 */
-
 let text = 'The Flintstones Rock!';
 
 function indentedText (text, repeat) {
