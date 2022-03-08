@@ -5,14 +5,14 @@ You may also assume that each string contains nothing but words and spaces, and 
 */
 
 function swap (string) {
- let wordsArray = string.split(' ');
- let firstLetters = wordsArray.map(word => word[0]);
- let lastLetters = wordsArray.map(word => word[word.length - 1]);
- return wordsArray.map((word, index) => {
-  word = word.replace(word[0], lastLetters[index]);
-  word = word.slice(0, -1) + firstLetters[index];
-  return word;
- }).join(' ')
+  let wordsArray = string.split(' ');
+  let firstLetters = wordsArray.map(word => word[0]);
+  let lastLetters = wordsArray.map(word => word[word.length - 1]);
+  return wordsArray.map((word, index) => {
+    word = word.replace(word[0], lastLetters[index]);
+    word = word.slice(0, -1) + firstLetters[index];
+    return word;
+  }).join(' ');
 } 
 
 //Test
