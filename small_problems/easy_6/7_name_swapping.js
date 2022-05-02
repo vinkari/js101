@@ -4,8 +4,11 @@ Write a function that takes a string argument consisting of a first name, a spac
 
 function swapName(name) {
   let arr = name.split(' ');
-  return `${arr[1]}, ${arr[0]}`;
+  let displayName = arr[arr.length - 1] + ', ';
+  arr.pop();
+  return displayName += arr.join(' ');
 }
 
 //Test
-console.log(swapName('Joe Roberts'));    // "Roberts, Joe"
+console.log(swapName('Joe Roberts'));
+console.log(swapName('Karl Oskar Henriksson Ragvals'));
